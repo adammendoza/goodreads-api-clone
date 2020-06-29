@@ -17,7 +17,7 @@ app.use(
   })
 );
 
-require("./routes/index")(app);
+require("./routes/v0/index")(app);
 
 const port = process.env.PORT || 3028;
 app.listen(port, () => {

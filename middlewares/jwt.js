@@ -7,14 +7,16 @@ const verifyToken = async (req, res, next) => {
         req.headers.authorization,
         process.env.JWT_SECRET
       );
-      console.log(username);
       if (username) {
+        req.username = username;
         return next();
       }
       return res.status(401).send({ error: "user not found!" });
+    } else {
+      throw new Error("Please provide authorization token");
     }
   } catch (error) {
-    return res.status(400).send({ error });
+    return res.status(400).send({ error: error.message || error });
   }
 };
 

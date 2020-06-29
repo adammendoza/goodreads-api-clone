@@ -1,9 +1,9 @@
-const requestHandlers = require("./request_handlers/auth");
+const requestHandlers = require("../request_handlers/auth");
 const passport = require("passport");
 const TwitterStrategy = require("passport-twitter");
 const { TWITTER_CONSUMER_KEY, TWITTER_CONSUMER_SECRET } = process.env;
 
-module.exports = async (app) => {
+module.exports = async (router) => {
   passport.use(
     new TwitterStrategy(
       {
@@ -23,15 +23,15 @@ module.exports = async (app) => {
     cb(null, obj);
   });
 
-  app.use(passport.initialize());
-  app.use(passport.session());
+  router.use(passport.initialize());
+  router.use(passport.session());
 
-  app.post("/signup");
-  app.post("/login");
-  app.get(
+  router.post("/signup");
+  router.post("/login");
+  router.get(
     "/auth/twitter/callback",
     requestHandlers.twitterAuth,
     requestHandlers.twitterAuthCallback
   );
-  app.get("/auth/twitter", requestHandlers.twitterAuth);
+  router.get("/auth/twitter", requestHandlers.twitterAuth);
 };
