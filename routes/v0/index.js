@@ -8,7 +8,6 @@ module.exports = async (app) => {
   });
 
   router.get("/me", verifyToken, (req, res, next) => {
-    console.log(req.session);
     res.send("Welcome");
   });
 

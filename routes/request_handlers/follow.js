@@ -44,9 +44,7 @@ const handleFollow = async (req, res, next) => {
   return res.send({ message: "Success." });
 };
 
-const handleUnfollow = async (req, res, next) => {
-  console.log(req.body);
-};
+const handleUnfollow = async (req, res, next) => {};
 
 module.exports = {
   handleFollow,
