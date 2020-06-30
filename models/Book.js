@@ -5,10 +5,7 @@ const bookSchema = mongoose.Schema({
     type: String,
     required: true,
   },
-  author: {
-    type: mongoose.Schema.Types.ObjectId,
-    ref: "Author",
-  },
+  author: { type: String },
   reviews: [
     {
       type: mongoose.Schema.Types.ObjectId,
@@ -21,10 +18,7 @@ const bookSchema = mongoose.Schema({
       ref: "Rating",
     },
   ],
-  cover: {
-    type: String,
-    required: true,
-  },
+  cover: { type: String },
   description: {
     type: String,
     required: true,

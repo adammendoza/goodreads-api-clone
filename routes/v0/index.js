@@ -13,6 +13,7 @@ module.exports = async (app) => {
 
   require("./auth")(router);
   require("./follow")(router);
+  require("./books")(router);
 
   app.use("/api/v0", router);
 };

@@ -18,11 +18,6 @@ const userSchema = mongoose.Schema({
     type: String,
     required: true,
   },
-  friends: [
-    {
-      type: String,
-    },
-  ],
   followers: [
     {
       type: String,

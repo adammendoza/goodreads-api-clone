@@ -5,6 +5,10 @@ const handleFollow = async (req, res, next) => {
   const userIdToFollow = req.params.userId;
   const currentUsername = req.username;
 
+  if (userIdToFollow === currentUsername) {
+    return res.status(400).send({ error: `Are you kidding?` });
+  }
+
   const userToFollow = await User.findOne(
     {
       $or: [
@@ -19,10 +23,6 @@ const handleFollow = async (req, res, next) => {
     return res
       .status(404)
       .send({ error: `No user with id ${userIdToFollow}.` });
-  }
-
-  if (userToFollow.username === currentUsername) {
-    return res.status(400).send({ error: `Are you kidding?` });
   }
 
   const isAlreadyFollowed =
@@ -44,7 +44,36 @@ const handleFollow = async (req, res, next) => {
   return res.send({ message: "Success." });
 };
 
-const handleUnfollow = async (req, res, next) => {};
+const handleUnfollow = async (req, res, next) => {
+  const userIdToUnfollow = req.params.userId;
+  const currentUsername = req.username;
+
+  if (userIdToUnfollow === currentUsername) {
+    return res.status(400).send({ error: `Are you kidding?` });
+  }
+
+  try {
+    const checkUser = await User.findOneAndUpdate(
+      { username: userIdToUnfollow },
+      { $pull: { followers: currentUsername } },
+      { useFindAndModify: false }
+    );
+
+    if (!checkUser) {
+      return res.status(404).send({ error: "User not found" });
+    }
+
+    const r = await User.findOneAndUpdate(
+      { username: currentUsername },
+      { $pull: { following: userIdToUnfollow } },
+      { useFindAndModify: false }
+    );
+  } catch (error) {
+    res.status(400).send({ error });
+  }
+
+  return res.send({ message: "Success." });
+};
 
 module.exports = {
   handleFollow,
