@@ -4,7 +4,6 @@ const mongoose = require("mongoose");
 const handleCreateBook = async (req, res, next) => {
   try {
     const bookBody = req.body;
-    console.log(bookBody);
     const { title, author, cover, description } = bookBody;
     const book = Book({ title, author, cover, description });
     const createdBook = await book.save();
